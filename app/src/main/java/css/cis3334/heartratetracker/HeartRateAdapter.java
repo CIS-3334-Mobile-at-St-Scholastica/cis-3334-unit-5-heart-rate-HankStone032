@@ -2,6 +2,7 @@ package css.cis3334.heartratetracker;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ public class HeartRateAdapter extends ArrayAdapter<HeartRate> {
 
     private final Context context;      // The activity calling this adapter
     private HeartRateList hrList;       // The object holding the arraylist of hear rates
+    private String colorString;
 
     /**
      *
@@ -47,7 +49,35 @@ public class HeartRateAdapter extends ArrayAdapter<HeartRate> {
 
         TextView tvPulse=(TextView)view.findViewById(R.id.textViewPulse);
         tvPulse.setText(hr.getPulse().toString());
+        TextView tvRange=(TextView)view.findViewById(R.id.textViewRange);
+        tvRange.setText(hr.getRangeName());
+        TextView tvDesc=(TextView)view.findViewById(R.id.textViewDesc);
+        tvDesc.setText(hr.getRangeDescrtiption());
 
+        colorString = hr.getRangeName();
+        int hrColor = 0;
+        switch(colorString) {
+            case "Resting":
+                hrColor = R.color.colorZone5;
+                break;
+            case "Moderate":
+                hrColor = R.color.colorZone4;
+                break;
+            case "Endurance":
+                hrColor = R.color.colorZone3;
+                break;
+            case "Aerobic":
+                hrColor = R.color.colorZone2;
+                break;
+            case "Anaerobic":
+                hrColor = R.color.colorZone1;
+                break;
+            case "Red Zone":
+                hrColor = R.color.colorZone0;
+                break;
+        }
+
+        tvRange.setTextColor(ContextCompat.getColor(context, hrColor));
         return(view);
     }
 
